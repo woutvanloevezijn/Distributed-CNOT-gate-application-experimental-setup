@@ -9,7 +9,7 @@ The experimental setup runs on [SquidASM](https://github.com/QuTech-Delft/squida
 Run the following command in the squidasm direcory:
 
 ```
-git clone directory
+git clone https://github.com/woutvanloevezijn/Distributed-CNOT-gate-application-experimental-setup.git
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ python3 run_simulation.py
 
 `application.py` stores the application of the control and target node which is used for to calculate the performance metrics. This application is based an example in the [NetQASM repository](https://github.com/QuTech-Delft/netqasm/tree/develop/netqasm/examples/apps/dist_cnot).
 
-The `config.yaml`, `depolarise_link_config.yaml` and `heralded_link_config.yaml` contain the values for the perfect configuration of the stacks an link. However, they could be tweaked if necessary. For example, for the parameter `p_loss_length` the `length` parameter was set to `100`. In `config.yaml`, when changing from stack and link, `generic` needs to be replaced with `nv ` in `stacks:` and `depolarise` needs to be replaced with `heralded` in `links:` and vice versa.
+The `config.yaml`, `depolarise_link_config.yaml` and `heralded_link_config.yaml` contain the values for the perfect configuration of the stacks an link. However, they could be tweaked if necessary. For example for the parameter p_loss_length, the length parameter was set to 100. In `config.yaml`, `generic` needs to be replaced with `nv ` in `stacks:` and `depolarise` needs to be replaced with `heralded` in `links:` when changing the stack and link and vice versa.
 
 `scraper.py` is a simple tool to calculate the sensitivity of all data files in a directory and print them to the terminal. The `direcory` value could be the string in which all data files are stored.
 

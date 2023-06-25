@@ -1,0 +1,105 @@
+# 2 node network. Small noise in link
+qdevice_cfg: &generic_device_cfg
+  num_qubits: 2
+
+  # coherence times (same for each qubit)
+  T1: 10_000_000_000
+  T2: 1_000_000_000
+
+  # gate execution times
+  init_time: 0
+  single_qubit_gate_time: 0
+  two_qubit_gate_time: 0
+  measure_time: 0
+
+  # noise model
+  single_qubit_gate_depolar_prob: 0.0
+  two_qubit_gate_depolar_prob: 0.0
+
+qdevice_cfq: &nv_device_cfg
+    # number of qubits per NV
+    num_qubits: 2
+
+    # initialization error of the electron spin
+    electron_init_depolar_prob: 0.00
+
+    # error of the single-qubit gate
+    electron_single_qubit_depolar_prob: 0.00
+
+    # measurement errors (prob_error_X is the probability that outcome X is flipped to 1 - X)
+    # Chance of 0 being measured as 1
+    prob_error_0: 0.00
+    # Chance of 1 being measured as 0
+    prob_error_1: 0.00
+
+    # initialization error of the carbon nuclear spin
+    carbon_init_depolar_prob: 0.00
+
+    # error of the Z-rotation gate on the carbon nuclear spin
+    carbon_z_rot_depolar_prob: 0.00
+
+    # error of the native NV two-qubit gate
+    ec_gate_depolar_prob: 0.00
+
+    # coherence times
+    electron_T1: 1_000_000_000
+    electron_T2: 300_000_000
+    carbon_T1: 150_000_000_000
+    carbon_T2: 1_500_000_000
+
+
+    # gate execution times
+    carbon_init: 0
+    carbon_rot_x: 0
+    carbon_rot_y: 0
+    carbon_rot_z: 0
+    electron_init: 0
+    electron_rot_x: 0
+    electron_rot_y: 0
+    electron_rot_z: 0
+    ec_controlled_dir_x: 0
+    ec_controlled_dir_y: 0
+    measure: 0
+
+stacks:
+  - name: Controller
+    qdevice_typ: generic
+    qdevice_cfg:
+      <<: *generic_device_cfg
+  - name: Target
+    qdevice_typ: generic
+    qdevice_cfg:
+      <<: *generic_device_cfg
+
+link_cfg: &depolarise_link_cfg
+  # Fidelity between the EPR pair qubits
+  fidelity: 1.
+  # Time in nanoseconds for an attempt to generated entanglement
+  t_cycle: 0.
+  # Chance for each attempt at entanglement to succeed
+  prob_success: 1.
+
+link_cfg: &heralded_link_cfg
+    # total length [km] of heralded connection (i.e. sum of fibers on both sides on midpoint station).
+    length: 0.0
+    # probability that photons are lost when entering connection the connection on either side.
+    p_loss_init: 0.0
+    # attenuation coefficient [dB/km] of fiber on either side.
+    p_loss_length: 0.0
+    # speed of light [km/s] in fiber on either side.
+    speed_of_light: 200_000
+    # dark-count probability per detection
+    dark_count_probability: 0.0
+    # probability that the presence of a photon leads to a detection event
+    detector_efficiency: 1.0
+    # Hong-Ou-Mandel visibility of photons that are being interfered (measure of photon indistinguishability)
+    visibility: 1.0
+    # determines whether photon-number-resolving detectors are used for the Bell-state measurement
+    num_resolving: False
+
+links:
+  - stack1: Controller
+    stack2: Target
+    typ: depolarise
+    cfg:
+      <<: *depolarise_link_cfg

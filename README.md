@@ -1,4 +1,6 @@
-# Distributed CNOT gate experimental setup
+# Research Project CSE3000 2023 of TU Delft: Distributed CNOT gate experimental setup
+
+This repository links to the work of students for the Research project course of the CSE bachelor at TU Delft.
 
 The experimental setup was run on the SDK called [SquidASM](https://github.com/QuTech-Delft/squidasm) at 25-06-2023. Any changes to the repository or installation procedure overtime could result in the program not working properly. 
 
